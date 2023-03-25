@@ -8,11 +8,11 @@ const UserSchema = new Schema({
         required:true,
         unique:true
     },
-    products:{
+    products:[{
         type:Schema.Types.ObjectId,
         ref:'Product',
         required:false
-    }
+    }]
 });
 
 UserSchema.plugin(passportLocalMongoose);

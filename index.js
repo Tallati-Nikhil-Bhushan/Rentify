@@ -1,3 +1,8 @@
+if(process.env.NODE_ENV !== "production")
+{
+    require('dotenv').config()
+}
+
 const express = require('express')
 const app = express()
 const path = require('path');
@@ -11,6 +16,9 @@ const LocalStatergy = require('passport-local');
 const User = require('./backend/models/user');
 const userRoutes = require('./backend/routes/users');
 const ExpressError = require('./backend/utils/ExpressError');
+const productRoutes = require('./backend/routes/products');
+const Category = require('./backend/models/categories');
+const reviewRoutes = require('./backend/routes/reviews');
 
 
 app.set('view engine','ejs');
@@ -73,6 +81,8 @@ app.use((req,res,next)=>{
 })
 
 app.use('/',userRoutes);
+app.use('/products',productRoutes);
+app.use('/products/:id/reviews',reviewRoutes);
 
 
 app.get('/',(req,res)=>{
@@ -84,10 +94,11 @@ app.all('*',(req,res,next)=>{
     next(new ExpressError("Page Not Found",404))
 })
 
-app.use((err,req,res,next)=>{
+app.use(async (err,req,res,next)=>{
+    const categories = await Category.find({});
     const {statusCode=500} = err;
     if(!err.message) err.message = "oh No,something went wrong"
-    res.status(statusCode).render('error',{err});
+    res.status(statusCode).render('error',{err,categories});
 })
 
 app.listen(3000,()=>{

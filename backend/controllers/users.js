@@ -1,7 +1,10 @@
 const User = require('../models/user');
+const mongoose = require('mongoose');
+const Category = require('../models/categories');
 
-module.exports.renderRegister = (req,res)=>{
-    res.render('users/register');
+module.exports.renderRegister = async(req,res)=>{
+    const categories = await Category.find({})
+    res.render('users/register',{categories});
 }
 
 module.exports.register = async(req,res)=>{
@@ -29,8 +32,9 @@ module.exports.register = async(req,res)=>{
     }
 }
 
-module.exports.renderLogin = (req,res)=>{
-    res.render('users/login');
+module.exports.renderLogin = async(req,res)=>{
+    const categories = await Category.find({})
+    res.render('users/login',{categories});
 }
 
 module.exports.login = (req,res)=>{

@@ -1,0 +1,70 @@
+<%-layout("layouts/boilerplate",{categories})%>
+<div class="row">
+    <h1 class="text-center">Edit Product</h1>
+    <div class="col-md-6 offset-md-3">
+        <form action="/products/<%=product._id%>?_method=PUT" method="post" class="validate-form" enctype="multipart/form-data" novalidate>
+            <div class="mb-3">
+                <label class="form-label"for="title">Title</label>
+                <input class="form-control" type="text" name="product[title]" id="title" value="<%= product.title %>" required>
+                <div class="valid-feedback">Looks Good</div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label"for="category">Category</label>
+                <input class="form-control" type="text" name="product[category]" id="category" value="<%= product.category %>" required>
+                <div class="valid-feedback">Looks Good</div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label"for="sub_category">Sub Category</label>
+                <input class="form-control" type="text" name="product[sub_category]" id="sub_category" value="<%= product.sub_category %>" required>
+                <div class="valid-feedback">Looks Good</div>
+            </div>
+
+            <div class="mb-3">     
+                <label class="form-label"for="location">Location</label>
+                <input class="form-control" type="text" name="product[location]" id="location" value="<%= product.location%>" required>
+                <div class="valid-feedback">Looks Good</div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label"for="price">Product Price per Day</label>
+                <div class="input-group">
+                    <span class="input-group-text" id="price-label">&#8377;</span>
+                    <input type="text" class="form-control" id="price" placeholder="0.00" name = "product[price]"  requiredaria-label="price" aria-describedby="price-label" value="<%= product.price%>">
+                    <div class="valid-feedback">Looks Good</div>
+                </div>
+            </div>
+            <div class="mb-3">     
+                <label class="form-label"for="description">Description</label>
+                <textarea class="form-control" type="text" name="product[description]" id="description" required><%= product.description%></textarea>
+                <div class="valid-feedback">Looks Good</div>
+            </div>
+
+            <div class="mb-3">     
+                <label class="form-label"for="availability_status">Availability Status</label>
+                <textarea class="form-control" type="text" name="product[availability_status]" id="availability_status" required><%= product.availability_status%></textarea>
+                <div class="valid-feedback">Looks Good</div>
+            </div>
+
+            <label class="form-label"for="image">Add Image</label>
+            <div class="input-group mb-3">
+                <input type="file" class="form-control" id="inputGroupFile02" name="image" multiple>
+                <label class="input-group-text" for="inputGroupFile02">Upload</label>
+            </div>
+            <div class="mb-3">
+                <%product.images.forEach(function(img,i){%>
+                    <img src="<%=img.thumbnail%>" class="img-thumbnail" alt="">
+                    <div class="form-check-inline">
+                        <input type="checkbox" id="image-<%=i%>" name="deleteImages[]" value="<%=img.filename%>">
+                    </div>
+                    <label for="image-<%=i%>">Delete?</label>
+                <%})%>  
+            </div>
+            <div class="mb-3">
+                <button class="btn btn-info">Update Product</button>
+            </div>        
+        </form>
+        
+        <a href="/products/<%= product._id %>">Back to Product</a>
+    </div>
+</div>
