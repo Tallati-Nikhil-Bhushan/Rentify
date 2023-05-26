@@ -1,34 +1,34 @@
 <%-layout("layouts/boilerplate",{categories})%>
 <div class="row">
-<h1><%=sub_category%></h1>
-<% for(let product of products){%>
-<div class="col-md-4">
-  <div class="my-3">
-    <div class="card mb-3">
-      <div class="row">
-        <div class="col-md-4">
+  <h1><%=sub_category%></h1>
+  <% for(let product of products){%>
+  <div class="col-md-3">
+    <div class="my-4">
+      <div class="card mb-3" style="width: 18rem;">
           <img
-            class="rounded mx-auto d-block img-fluid"
+            class="card-img-top rounded mx-auto d-block img-fluid"
             src="<%=product.images[0]?product.images[0].url:''%>"
+            style="height: 10rem;"
           />
-        </div>
-        <div class="col-md-8">
           <div class="card-body">
             <h5 class="card-title"><%=product.title%></h5>
-            <p class="card-text"><%=product.description%></p>
             <p class="card-text">
-              <small class="text-muted"><%=product.location%></small>
+              <small class="text-muted">Category : <%=product.category%></small>
+            </p>
+            <p class="card-text">
+              <small class="text-muted">Sub Category : <%=product.sub_category%></small>
+            </p>
+            <p class="card-text">
+              <small class="text-muted">Location : <%=product.location%></small>
             </p>
             <a class="btn btn-primary" href="/products/<%=product._id%>"
-              >View <%=product.title%></a
+              >View</a
             >
           </div>
-        </div>
       </div>
     </div>
   </div>
-</div>
-<% } %>
+  <% } %>
 </div>
 <script>
   const products = { features: "<%-JSON.stringify(products)%>" };

@@ -72,6 +72,7 @@ module.exports.updateProduct = async (req,res)=>{
 
 module.exports.deleteProduct = async (req,res)=>{
     const {id} = req.params;
+    await User.findByIdAndUpdate(req.user._id,{$pull:{products:id}})
     await Product.findByIdAndDelete(id);
     req.flash('success','Successfully Deleted Product')
     res.redirect("/products");

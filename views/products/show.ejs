@@ -60,6 +60,22 @@
         </div>
       </div>
 
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">
+            Contact Details
+          </h5>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">
+            Email : <%=product.author.email%>
+          </li>
+          <li class="list-group-item">
+            Mobile : <%=product.author.mobile_no%>
+          </li>
+        </ul>
+      </div>
+
       <%if(currentUser){%>
         <h2>Leave a Review</h2>
         <form action="/products/<%=product._id%>/reviews" method="post" class="mb-3 validate-form" novalidate>

@@ -8,6 +8,11 @@ const UserSchema = new Schema({
         required:true,
         unique:true
     },
+    mobile_no:{
+        type:String,
+        required:true,
+        unique:true
+    },
     products:[{
         type:Schema.Types.ObjectId,
         ref:'Product',
