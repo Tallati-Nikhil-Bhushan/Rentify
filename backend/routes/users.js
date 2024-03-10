@@ -12,6 +12,14 @@ router.route('/login')
     .get(user.renderLogin)
     .post(passport.authenticate('local',{failureFlash:true,failureRedirect:'/login',keepSessionInfo: true}),user.login)
 
+router.route('/forgot-password')
+    .get(user.renderForgotPassword)
+    .post(catchAsync(user.forgotPassword))
+
+router.route('/reset-password/:token')
+    .get(user.renderResetPassword)
+    .post(catchAsync(user.resetPassword))  
+
 router.get('/logout',user.logout)
 
 module.exports = router;
