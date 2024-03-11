@@ -128,6 +128,7 @@ module.exports.resetPassword = async (req, res, next) => {
         user.resetPasswordExpires = undefined;
         await user.save();
 
+        req.session.returnTo = '/products';
         req.flash('success', 'Your password has been reset successfully.');
         res.redirect('/login');
     } catch (e) {
