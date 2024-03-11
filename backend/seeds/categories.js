@@ -18,7 +18,7 @@ db.once("open",()=>{
 })
 
 
-const cat_arr = ["Education","Entertainment","Fashion","Electronics","Properties","Furniture","Sports"]
+const cat_arr = ["Education","Entertainment","Fashion","Electronics","Properties","Furniture","Sports","Vehicles"]
 
 const seedDB = async()=>{
     await Category.deleteMany({});

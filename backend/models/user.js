@@ -17,7 +17,9 @@ const UserSchema = new Schema({
         type:Schema.Types.ObjectId,
         ref:'Product',
         required:false
-    }]
+    }],
+    resetPasswordToken: String, // Store the hashed token
+    resetPasswordExpires: Date, // Token expiration timestamp
 });
 
 UserSchema.plugin(passportLocalMongoose);

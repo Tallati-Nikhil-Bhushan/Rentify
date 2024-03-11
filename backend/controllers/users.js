@@ -13,6 +13,7 @@ module.exports.register = async(req,res)=>{
     const {username,email,mobile_no,password} = req.body;
     const user = new User({email,mobile_no,username});
     const registeredUser = await User.register(user,password);
+    
     req.login(registeredUser,err=>{
         if(err)
         {
@@ -56,6 +57,7 @@ const nodemailer = require('nodemailer');
 
 // Render forgot password page
 module.exports.renderForgotPassword = async (req, res) => {
+    const categories = await Category.find({})
     res.render('users/forgot-password',{categories});
 };
 
@@ -102,6 +104,7 @@ module.exports.forgotPassword = async (req, res, next) => {
 
 // Render reset password page
 module.exports.renderResetPassword = async (req, res) => {
+    const categories = await Category.find({})
     const { token } = req.params;
     res.render('users/reset-password', {categories,token});
 };
@@ -120,15 +123,16 @@ module.exports.resetPassword = async (req, res, next) => {
         }
 
         // Update user's password
-        user.setPassword(password);
+        await user.setPassword(password);
         user.resetPasswordToken = undefined;
         user.resetPasswordExpires = undefined;
         await user.save();
 
         req.flash('success', 'Your password has been reset successfully.');
         res.redirect('/login');
-    } catch (error) {
+    } catch (e) {
         req.flash('error',e.message);
         res.redirect('/forgot-password');
     }
 };
+
