@@ -18,20 +18,52 @@ db.once("open",()=>{
 })
 
 
-const cat_arr = ["Education","Entertainment","Fashion","Electronics","Properties","Furniture","Sports","Vehicles"]
+const categoriesWithSubCategories = [
+    {
+        category: "Education",
+        sub_categories: ["Books", "Online Courses", "Tutoring Services"]
+    },
+    {
+        category: "Entertainment",
+        sub_categories: ["Novels","Music Instruments"]
+    },
+    {
+        category: "Fashion",
+        sub_categories: ["Clothing Men","Clothing Women","Costumes"]
+    },
+    {
+        category: "Electronics",
+        sub_categories: ["Laptops", "Cameras","Mobile","Gaming"]
+    },
+    {
+        category: "Properties",
+        sub_categories: ["Houses", "Commercial Spaces","Vacation Rentals"]
+    },
+    {
+        category: "Furniture",
+        sub_categories: ["Chairs", "Tables", "Sofas","Dressing Tables"]
+    },
+    {
+        category: "Sports",
+        sub_categories: ["Fitness Equipment","Kits"]
+    },
+    {
+        category: "Vehicles",
+        sub_categories: ["Cars", "Motorcycles", "Bicycles","Electric Bike"]
+    }
+];
 
-const seedDB = async()=>{
+const seedDB = async () => {
     await Category.deleteMany({});
-    for(let i=0;i<cat_arr.length;i++)
-{
-    const category = new Category({
-        category:cat_arr[i],
-        sub_categories:[]
-    })
-
-    await category.save();
-}
-}
+    for (const categoryData of categoriesWithSubCategories) {
+        const { category, sub_categories } = categoryData;
+        const newCategory = new Category({
+            category,
+            sub_categories
+        });
+        await newCategory.save();
+    }
+};
 
 seedDB().then(()=>{
     mongoose.connection.close();

@@ -11,17 +11,18 @@
 
         <div class="form-group mb-3">
             <label for="FormControlSelect">Category</label>
-            <select class="form-control" id="FormControlSelect" name="product[category]">
+            <select class="form-control" id="FormControlSelect" name="product[category]" >
+                <option value="">Select a category</option>
                 <% for( let category of categories ) { %>
                     <option value="<%= category.category %>"><%= category.category %></option>
                 <% } %>
             </select>
           </div>
 
-          <div class="mb-3">
-            <label class="form-label" for="sub_category">Sub Category</label>
-            <input class="form-control bi bi-spellcheck" type="text" name="product[sub_category]" id="sub_category" required />
-            <div class="valid-feedback">Looks Good</div>
+          <div class="form-group mb-3" id="subCategoryDiv" style="display: none;">
+            <label for="subCategorySelect">Sub Category</label>
+            <select class="form-control" id="subCategorySelect" name="product[sub_category]">
+            </select>
           </div>
 
         <div class="mb-3">
@@ -62,3 +63,38 @@
       </form>
     </div>
   </div>
+
+  <script>
+    const categories = [];
+    let subCategories = [];
+
+    <% categories.forEach(category => { %>
+        subCategories = []
+        <% if (category.sub_categories && Array.isArray(category.sub_categories)) { %>
+            <% category.sub_categories.forEach(subCategory => { %>
+                subCategories.push('<%= subCategory %>');
+            <% }) %>
+        <% } %>
+        categories.push({ category: '<%= category.category %>', sub_categories: subCategories });
+    <% }) %>
+
+    const categorySelect = document.getElementById('FormControlSelect');
+    const subCategorySelect = document.getElementById('subCategorySelect');
+
+    categorySelect.addEventListener('change', function() {
+      const selectedCategory = this.value;
+      const selectedCategoryObj = categories.find(obj => obj.category === selectedCategory);
+      if (selectedCategoryObj) {
+        subCategorySelect.innerHTML = ''; // Clear previous options
+        selectedCategoryObj.sub_categories.forEach(subCategory => {
+          const option = document.createElement('option');
+          option.value = subCategory;
+          option.textContent = subCategory;
+          subCategorySelect.appendChild(option);
+        });
+        document.getElementById('subCategoryDiv').style.display = 'block'; // Show sub-categories dropdown
+      } else {
+        document.getElementById('subCategoryDiv').style.display = 'none'; // Hide sub-categories dropdown if no sub-categories for the selected category
+      }
+    });
+</script>
