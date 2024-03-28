@@ -7,14 +7,20 @@ const Category = require('../models/categories');
 module.exports.index = async(req,res)=>{
     const products = await Product.find({})
     const categories = await Category.find({});
-    res.render('products/index',{products,categories,"sub_category":"All Products"})
+    res.render('products/index',{products,categories,"title":"All Products"})
+}
+
+module.exports.renderMyProducts = async(req,res)=>{
+    const products = await Product.find({author : req.user._id})
+    const categories = await Category.find({});
+    res.render('products/index',{products,categories,"title":"My Products"})
 } 
 
 module.exports.findByCategory = async(req,res)=>{
     const sub_category = req.params.sub_category
     const products = await Product.find({sub_category})
     const categories = await Category.find({});
-    res.render('products/index',{products,categories,sub_category})
+    res.render('products/index',{products,categories,"title":sub_category})
 } 
 
 module.exports.renderNewForm = async (req,res)=>{

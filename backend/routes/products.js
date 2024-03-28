@@ -12,6 +12,8 @@ router.route('/')
     .get(catchAsync(products.index))
     .post(isLoggedIn,upload.array('image'),validateProduct,catchAsync(products.createProduct))
 
+router.get('/myproducts',isLoggedIn,catchAsync(products.renderMyProducts))
+
 router.get('/new',isLoggedIn,catchAsync(products.renderNewForm))
 
 router.get('/category/:sub_category',catchAsync(products.findByCategory))
